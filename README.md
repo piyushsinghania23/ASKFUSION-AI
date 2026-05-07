@@ -1,68 +1,113 @@
-# ASKFUSION AI
+﻿# ASKFUSION AI
 
-ASKFUSION AI is a full-stack document and multimedia Q&A platform built for the SDE-1 assignment requirements.
+ASKFUSION AI is a full-stack app for asking questions from uploaded PDF, audio, and video files.
 
-It supports:
-- PDF, audio, and video uploads
-- AI-style question answering grounded in uploaded content
-- Content summarization
-- Topic-to-timestamp extraction for audio/video
-- One-click playback jump to relevant timestamps
-- Streaming chat responses (SSE)
-- Dockerized local stack with PostgreSQL + Redis
-- CI with automated test coverage gate (95%+)
+It is built to be demo-friendly for interviews: upload a file, index it, ask questions, get citations, and jump to relevant media timestamps.
 
-## Stack
-- Backend: FastAPI + SQLAlchemy
-- Database: PostgreSQL (Docker Compose), SQLite fallback for local/test
-- AI integrations: OpenAI (chat, embeddings, transcription) with resilient local fallbacks
+## Interviewer Quick View
+
+### What Problem It Solves
+- Lets users chat with their own documents and media.
+- Returns grounded answers from indexed chunks.
+- Supports timestamp discovery for audio/video.
+
+### What Is Implemented
+- File upload and indexing for PDF, audio, and video.
+- Retrieval-based Q&A with citations.
+- Summary generation per document.
+- Topic-to-timestamp extraction.
+- In-app media playback with jump-to-time.
+- Streaming answer endpoint (SSE).
+- Dockerized stack and CI tests with coverage gate.
+
+### Core Tech
 - Frontend: React + TypeScript + Vite
-- Infra: Docker, Docker Compose, GitHub Actions
+- Backend: FastAPI + SQLAlchemy
+- AI: OpenAI APIs with local fallback behavior when key is missing
+- Databases: PostgreSQL in Docker, SQLite fallback for local/test
+- Infra: Docker Compose + GitHub Actions
+
+## 2-Minute Demo Flow
+1. Open `http://localhost:5173`.
+2. Upload a PDF or media file.
+3. Select the file in Library.
+4. Ask a question in Chat and verify citations.
+5. Search a topic in Timestamp Explorer.
+6. Click a timestamp to jump playback.
+
+## Architecture Snapshot
+1. Upload endpoint stores file and creates document metadata.
+2. Ingestion service extracts text and chunks it.
+3. Embedding service creates vectors for chunks and query.
+4. Retrieval ranks relevant chunks.
+5. LLM service generates answer from retrieved context.
+6. Timestamp extraction surfaces relevant time windows.
 
 ## Repository Layout
-```
+```text
 .
-├─ backend/
-│  ├─ app/
-│  ├─ tests/
-│  ├─ Dockerfile
-│  └─ requirements.txt
-├─ frontend/
-│  ├─ src/
-│  ├─ Dockerfile
-│  └─ package.json
-├─ .github/workflows/ci.yml
-└─ docker-compose.yml
+|- backend/
+|  |- app/
+|  |- tests/
+|  |- Dockerfile
+|  `- requirements.txt
+|- frontend/
+|  |- src/
+|  |- Dockerfile
+|  `- package.json
+|- .github/workflows/ci.yml
+`- docker-compose.yml
 ```
 
-## Quick Start (Docker Compose)
-1. (Optional) Set your API key:
-   - Windows PowerShell: `$env:OPENAI_API_KEY="your_key"` (or `$env:ASKFUSION_OPENAI_API_KEY="your_key"`)
-   - macOS/Linux: `export OPENAI_API_KEY="your_key"` (or `export ASKFUSION_OPENAI_API_KEY="your_key"`)
-2. Run:
-   - `docker compose up --build`
-3. Open:
-   - Frontend: `http://localhost:5173`
-   - Backend API docs: `http://localhost:8000/docs`
+## Quick Start (Docker)
+1. Optional: set API key.
+```powershell
+$env:OPENAI_API_KEY="your_key"
+```
+2. Run containers.
+```bash
+docker compose up --build
+```
+3. Open apps.
+- Frontend: `http://localhost:5173`
+- Backend docs: `http://localhost:8000/docs`
 
 ## Local Development
 
 ### Backend
-1. `python -m pip install -r backend/requirements.txt`
-2. Optional env vars:
-   - `ASKFUSION_OPENAI_API_KEY` (or `OPENAI_API_KEY`)
-   - `ASKFUSION_DATABASE_URL`
-3. Run API:
-   - `uvicorn app.main:app --host 0.0.0.0 --port 8000 --app-dir backend`
+1. Install dependencies.
+```bash
+python -m pip install -r backend/requirements.txt
+```
+2. Run API.
+```bash
+uvicorn app.main:app --host 0.0.0.0 --port 8000 --app-dir backend
+```
 
 ### Frontend
-1. `cd frontend`
-2. `npm install`  
-   If PowerShell blocks scripts (`npm.ps1 cannot be loaded`), use `npm.cmd install`.
-3. `npm run dev`  
-   If needed on restricted PowerShell, use `npm.cmd run dev`.
+1. Install dependencies.
+```bash
+cd frontend
+npm install
+```
+2. Start dev server.
+```bash
+npm run dev
+```
 
-Set `VITE_API_BASE_URL` if needed (defaults to `http://localhost:8000`).
+PowerShell fallback if script policy blocks npm:
+- `npm.cmd install`
+- `npm.cmd run dev`
+
+## Environment Variables
+Use `.env.example` as reference.
+
+- `OPENAI_API_KEY` or `ASKFUSION_OPENAI_API_KEY`
+- `ASKFUSION_ENABLE_OPENAI` (default `true`)
+- `ASKFUSION_DATABASE_URL`
+- `ASKFUSION_UPLOADS_DIR`
+- `ASKFUSION_ALLOWED_ORIGINS`
+- `VITE_API_BASE_URL`
 
 ## API Endpoints
 - `GET /health`
@@ -75,23 +120,29 @@ Set `VITE_API_BASE_URL` if needed (defaults to `http://localhost:8000`).
 - `POST /api/chat/stream` (SSE)
 
 ## Testing
-Run backend tests with coverage gate:
-
+Run backend tests:
 ```bash
 cd backend
 python -m pytest
 ```
 
-Configured gate: **95% minimum coverage** (`pytest-cov`).
+Coverage gate: minimum 95%.
+
+## Reliability and Fallback Behavior
+If OpenAI key is missing or an API call fails:
+- Embeddings fall back to deterministic local hash embeddings.
+- Chat falls back to context-based extractive response.
+- Transcription falls back to placeholder transcript text.
+
+This keeps the app usable in offline or keyless environments.
 
 ## Assignment Requirement Mapping
-- Full-stack web app: Implemented (FastAPI + React)
-- PDF/audio/video upload: Implemented
-- LLM-powered Q&A: Implemented with OpenAI + local fallback
-- Transcription (Whisper/OpenAI ASR path): Implemented with OpenAI + fallback
-- Text + metadata persistence: Implemented (RDBMS-compatible, PostgreSQL-ready)
-- Summary generation: Implemented
-- Topic timestamps + playback jump: Implemented
-- Dockerfile + Docker Compose: Implemented
-- CI/CD via GitHub Actions: Implemented
-- Automated testing with 95%+: Implemented
+- Full-stack web app: implemented
+- PDF/audio/video upload: implemented
+- LLM-powered Q&A: implemented
+- Transcription path: implemented
+- Text + metadata persistence: implemented
+- Summary generation: implemented
+- Topic timestamping + playback jump: implemented
+- Docker + Compose: implemented
+- CI/CD with tests: implemented
