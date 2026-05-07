@@ -84,6 +84,27 @@ docker compose up --build
 - Frontend: `http://localhost:5173`
 - Backend docs: `http://localhost:8000/docs`
 
+## Deploy on Render
+This repo includes a ready Blueprint file: `render.yaml`.
+
+1. Push latest `main` branch to GitHub.
+2. In Render Dashboard, click `New` -> `Blueprint`.
+3. Connect this repository: `piyushsinghania23/ASKFUSION-AI`.
+4. Render detects `render.yaml` and shows resources to create:
+- `askfusion-ai-backend` (Web Service, Python)
+- `askfusion-ai-frontend` (Static Site)
+- `askfusion-ai-db` (Postgres, Free)
+5. When prompted, set `ASKFUSION_OPENAI_API_KEY` (optional but recommended).
+6. Click `Apply` / `Deploy Blueprint`.
+7. After deploy:
+- Open frontend URL: `https://askfusion-ai-frontend.onrender.com`
+- Backend health: `https://askfusion-ai-backend.onrender.com/health`
+
+Notes:
+- Free Render web services spin down on inactivity and may take ~1 minute to wake.
+- Free web services use ephemeral local storage, so uploaded files are not permanent.
+- CORS for `*.onrender.com` is already configured in backend settings.
+
 ## Local Development
 
 ### Backend

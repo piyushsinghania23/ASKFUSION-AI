@@ -31,9 +31,22 @@ function defaultApiBaseUrl(): string {
     return "http://localhost:8000";
   }
   const protocol = window.location.protocol === "https:" ? "https" : "http";
-  const rawHost = window.location.hostname || "localhost";
-  const host = rawHost.includes(":") ? `[${rawHost}]` : rawHost;
-  return `${protocol}://${host}:8000`;
+  const host = window.location.hostname || "localhost";
+
+  // Render static site + API convention:
+  // askfusion-ai-frontend.onrender.com -> askfusion-ai-backend.onrender.com
+  if (host.endsWith(".onrender.com")) {
+    const backendHost = host.replace("-frontend.", "-backend.");
+    if (backendHost !== host) {
+      return `${protocol}://${backendHost}`;
+    }
+  }
+
+  if (host === "localhost" || host === "127.0.0.1") {
+    return `${protocol}://${host}:8000`;
+  }
+
+  return `${protocol}://${host}`;
 }
 
 export const API_BASE_URL =
