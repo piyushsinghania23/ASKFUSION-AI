@@ -1,8 +1,20 @@
 ﻿# ASKFUSION AI
 
+[![CI](https://github.com/piyushsinghania23/ASKFUSION-AI/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/piyushsinghania23/ASKFUSION-AI/actions/workflows/ci.yml)
+![Coverage](https://img.shields.io/badge/Coverage-%E2%89%A595%25-brightgreen)
+![Backend](https://img.shields.io/badge/Backend-FastAPI-009688?logo=fastapi&logoColor=white)
+![Frontend](https://img.shields.io/badge/Frontend-React%20%2B%20TypeScript-3178C6?logo=typescript&logoColor=white)
+![Docker](https://img.shields.io/badge/Container-Docker-2496ED?logo=docker&logoColor=white)
+
 ASKFUSION AI is a full-stack app for asking questions from uploaded PDF, audio, and video files.
 
 It is built to be demo-friendly for interviews: upload a file, index it, ask questions, get citations, and jump to relevant media timestamps.
+
+## Demo Snapshot
+
+![ASKFUSION AI Demo Preview](docs/demo-preview.svg)
+
+For live walkthrough: upload a file, ask a question, and click timestamps to jump in media playback.
 
 ## Interviewer Quick View
 

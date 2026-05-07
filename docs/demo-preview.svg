@@ -1,0 +1,36 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="640" viewBox="0 0 1200 640" role="img" aria-label="ASKFUSION AI demo preview">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#071726"/>
+      <stop offset="60%" stop-color="#0c2840"/>
+      <stop offset="100%" stop-color="#112f49"/>
+    </linearGradient>
+    <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1a3a57" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#17324a" stop-opacity="0.9"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="640" fill="url(#bg)"/>
+  <circle cx="130" cy="90" r="130" fill="#ff8e3c" fill-opacity="0.15"/>
+  <circle cx="1060" cy="40" r="160" fill="#1ecbe1" fill-opacity="0.14"/>
+
+  <rect x="80" y="55" width="1040" height="120" rx="20" fill="url(#panel)" stroke="#4a6a86" stroke-opacity="0.5"/>
+  <text x="110" y="110" fill="#20d3e8" font-family="Segoe UI, Arial, sans-serif" font-size="22" letter-spacing="2">ASKFUSION AI</text>
+  <text x="110" y="150" fill="#f6f7f4" font-family="Segoe UI, Arial, sans-serif" font-size="52" font-weight="700">Document + Multimedia Intelligence</text>
+
+  <rect x="80" y="205" width="500" height="360" rx="18" fill="url(#panel)" stroke="#4a6a86" stroke-opacity="0.5"/>
+  <text x="105" y="250" fill="#f6f7f4" font-family="Segoe UI, Arial, sans-serif" font-size="34" font-weight="700">Upload, Index, and Chat</text>
+  <text x="105" y="295" fill="#d8e1e8" font-family="Segoe UI, Arial, sans-serif" font-size="24">Upload PDF, audio, or video files</text>
+  <text x="105" y="332" fill="#d8e1e8" font-family="Segoe UI, Arial, sans-serif" font-size="24">Ask grounded questions with citations</text>
+  <text x="105" y="369" fill="#d8e1e8" font-family="Segoe UI, Arial, sans-serif" font-size="24">Stream responses in real-time</text>
+
+  <rect x="620" y="205" width="500" height="360" rx="18" fill="url(#panel)" stroke="#4a6a86" stroke-opacity="0.5"/>
+  <text x="645" y="250" fill="#f6f7f4" font-family="Segoe UI, Arial, sans-serif" font-size="34" font-weight="700">Timestamp Explorer</text>
+  <text x="645" y="295" fill="#d8e1e8" font-family="Segoe UI, Arial, sans-serif" font-size="24">Find key moments by topic</text>
+  <text x="645" y="332" fill="#d8e1e8" font-family="Segoe UI, Arial, sans-serif" font-size="24">Jump instantly to media playback</text>
+
+  <rect x="645" y="375" width="435" height="58" rx="12" fill="#0d1f30" stroke="#3a5975"/>
+  <text x="665" y="412" fill="#f6f7f4" font-family="Consolas, monospace" font-size="26">0:00-0:30  key point detected...</text>
+
+  <text x="80" y="610" fill="#a8b9c7" font-family="Segoe UI, Arial, sans-serif" font-size="20">Preview illustration for README. Replace with a real product screenshot/GIF if desired.</text>
+</svg>
